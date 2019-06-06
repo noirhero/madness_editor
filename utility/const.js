@@ -2,6 +2,8 @@
 
 const GAME_UNIT = 10;
 
+const INIT_QUAT = glMatrix.quat.create();
+
 const INIT_TEXCOORD = [
   glMatrix.vec2.fromValues(0.0, 1.0),
   glMatrix.vec2.fromValues(1.0, 1.0),

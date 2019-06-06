@@ -3,6 +3,11 @@
 function Main() {
   "use strict";
 
+  if(false === InitializeWebGL()) {
+    return;
+  }
+
+  // Ignore screen touch move.
   document.getElementById("main").ontouchmove = event => {
     event.preventDefault();
   };
@@ -12,12 +17,11 @@ function Main() {
   const world = new CES.World();
   const entity = new CES.Entity();
 
-  entity.addComponent(new WebGLComp());
   entity.addComponent(new PosComp());
   entity.addComponent(new ScaleComp());
   entity.addComponent(new TexcoordComp());
   world.addEntity(entity);
-  world.addSystem(new WebGLSystem());
+
   world.addSystem(new CanvasRectSystem());
   world.addSystem(new RenderSpriteSystem());
 

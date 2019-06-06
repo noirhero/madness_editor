@@ -1,31 +1,36 @@
 // Copyright 2018-2019 TAP, Inc. All Rights Reserved.
 
-const WebGL = {
-  Initialize: (body_id, canvas_id) => {
-    const body = document.getElementById(body_id || "main");
-    body.ontouchmove = (event) => {
-      event.preventDefault();
-    };
+var CANVAS = null;
+var GL = null;
 
-    const canvas = document.getElementById(canvas_id || "main_canvas");
+function InitializeWebGL(canvas_id) {
+  canvas_id = canvas_id || "main_canvas";
+  CANVAS = document.getElementById(canvas_id);
+  if(!CANVAS) {
+    alert(`Find canvas failed : ${canvas_id}`);
+    return false;
+  }
 
-    const options = {
-      premultipliedAlpha: false,
-      antialias: false,
-    };
-    let context = canvas.getContext("webgl", options);
-    if(!context) {
-      context = canvas.getContext("experiment-webgl", options);
-    }
+  const options = {
+    premultipliedAlpha: false,
+    antialias: false,
+  };
 
-    if(!context) {
-      alert("In browser is WebGL not supported.");
-      return undefined;
-    }
+  GL = CANVAS.getContext("webgl", options);
+  if(!GL) {
+    GL = CANVAS.getContext("experiment-webgl", options);
+  }
 
-    return {
-      Canvas: canvas,
-      GL: context,
-    };
-  },
-};
+  if(!GL) {
+    alert("This browser is not supported for WebGL.");
+    return false;
+  }
+
+  GL.depthFunc(GL.GREATER);
+  GL.disable(GL.CULL_FACE);
+  GL.frontFace(GL.CW);
+  GL.enable(GL.BLEND);
+  GL.enable(GL.DEPTH_TEST);
+
+  return true;
+}
