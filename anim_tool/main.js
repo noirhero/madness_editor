@@ -17,12 +17,15 @@ function Main() {
   const world = new CES.World();
   const entity = new CES.Entity();
 
+  entity.addComponent(new CameraComp());
+  entity.addComponent(new ViewportComp());
   entity.addComponent(new PosComp());
   entity.addComponent(new ScaleComp());
   entity.addComponent(new TexcoordComp());
   world.addEntity(entity);
 
   world.addSystem(new CanvasRectSystem());
+  world.addSystem(new ViewportSystem());
   world.addSystem(new RenderSpriteSystem());
 
   const frame_fn = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;

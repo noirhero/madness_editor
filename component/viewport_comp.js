@@ -3,8 +3,6 @@
 const ViewportComp = CES.Component.extend({
   name: "Viewport",
   init: function(near, far) {
-    this.width = 0;
-    this.height = 0;
     this.near = near || 1000;
     this.far = far || -1000;
 
